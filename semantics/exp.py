@@ -42,12 +42,20 @@ def cont():
 
     # text = 'egele has joined the channel'
     # text = 'egele has joilned the channel'
-    text = 'egele has left the channel'
+    text = 'egele has joinedg the channel'
 
     if 'has joined the channel' in text or 'has left the channel' in text:
         print('yikes')
     else:
         print(text)
+
+    bad_texts = ['has joined the channel', 'has left the channel']
+
+    for bt in bad_texts:
+        if bt in text:
+            return True
+
+    return False
 
 
 
@@ -59,8 +67,8 @@ __end__ = '__end__'
 if __name__ == '__main__':
 
 
-    # cont()
-    reg()
+    print(cont())
+    # reg()
     # saintment()
 
     pass

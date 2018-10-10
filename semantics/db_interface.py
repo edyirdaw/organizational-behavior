@@ -68,8 +68,8 @@ class DbInterface:
 
 def run_test():
 
-    d = DbInterface('remote_1')
-    # d = DbInterface('local')
+    # d = DbInterface('remote_1')
+    d = DbInterface('local')
     d.test()
 
 

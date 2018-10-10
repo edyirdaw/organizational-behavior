@@ -1,5 +1,9 @@
 # Tested on python2.7
 
+import db_interface
+from textblob import TextBlob
+
+
 
 class SentimentAnalysis:
 
@@ -14,6 +18,16 @@ class SentimentAnalysis:
     def create_sentiment(self):
 
         pass
+
+
+
+
+
+
+
+    # def test(self):
+
+
 
 
 

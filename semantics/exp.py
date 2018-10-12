@@ -67,8 +67,8 @@ __end__ = '__end__'
 if __name__ == '__main__':
 
 
-    print(cont())
+    # print(cont())
     # reg()
-    # saintment()
+    saintment()
 
     pass

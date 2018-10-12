@@ -55,11 +55,13 @@ class DbInterface:
         try:
             self.cursor.execute("""SELECT * from channel""")
             rows = self.cursor.fetchall()
+            rows_len = len(rows)
             for row in rows:
                 print(row)
             print(type(rows))
             print(type(rows[0]))
             print(rows[0]['id'])
+            print("rows_len,",rows_len)
         except Exception as e:
             logging.exception("message")
 

@@ -22,9 +22,10 @@ import cleansing_news as pclean
 
 class TopicAnalysis:
 
-    def __init__(self, path):
+    def __init__(self, path,channel=''):
 
         self.data_path = path
+        self.channel = channel
 
         self.root_path = str(pathlib.Path(os.path.abspath('')).parents[1]) + '/appData/plsa/'
         print(self.root_path)
@@ -64,7 +65,7 @@ class TopicAnalysis:
         self.read_csv()
 
 
-        self.unique_folder_naming = str(datetime.datetime.now()).replace(':','-').replace('.','-') + '^' + str(random.randint(100000000000, 999999999999)) + '/'
+        self.unique_folder_naming = str(datetime.datetime.now()).replace(':','-').replace('.','-') + '^' + str(random.randint(100000000000, 999999999999)) + self.channel + '/'
         print(self.unique_folder_naming)
 
         os.mkdir(self.extracted_folder+self.unique_folder_naming)
@@ -74,8 +75,15 @@ class TopicAnalysis:
         for row in self.messages:
             if row['subtype'] == 'chat':
                 file = self.extracted_folder+self.unique_folder_naming+str(idx+2)+'.txt'
-                with open(file, 'w') as f:
-                    f.write(row['text'])
+                if self.channel == '':
+                    with open(file, 'w') as f:
+                        f.write(row['text'])
+                else:
+                    if row['channel_name'] == self.channel:
+                        with open(file, 'w') as f:
+                            f.write(row['text'])
+                    else:
+                        continue
 
             idx = idx + 1
 
@@ -130,7 +138,7 @@ class TopicAnalysis:
 def run_plsa_slack():
     path_1 = str(pathlib.Path(os.path.abspath('')).parents[1]) + '/appData/misc/slack_messages.csv'
     print(path_1)
-    s = TopicAnalysis(path_1)
+    s = TopicAnalysis(path_1,'singnet')
     s.write_to_files_slack()
     s.generate_topics()
 
@@ -147,7 +155,8 @@ def test_preprocessing():
 
     root_folder = str(pathlib.Path(os.path.abspath('')).parents[1])+'/appData/plsa/test/'
 
-    pclean.file_parts_number=9
+    pclean.file_parts_number=10
+    pplsa.file_parts_number = 10
     pclean.file_dict = root_folder + 'dict/test_dict'
     pclean.source_texts = root_folder + 'extracted/*.txt'
     pclean.output_dir = root_folder + 'cleaned/'
@@ -159,7 +168,7 @@ def test_preprocessing():
     # Train using PLSA
     pplsa.folder = pclean.output_dir[:-1]
     pplsa.dict_path = pclean.file_dict
-    pplsa.folder = root_folder + 'plsa/cleaned'
+    pplsa.folder = pclean.output_dir[:-1]
     pplsa.main()
 
 
